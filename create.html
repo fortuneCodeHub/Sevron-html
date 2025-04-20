@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sevron</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+
+    <!-- Manrope fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Russo+One&display=swap" rel="stylesheet">
+
+
+    <!-- Customize tailwind CSS -->
+    <link rel="stylesheet" href="css/global.css">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Framer motion -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <section class="mb-20">
+        <nav class="bg-white shadow-lg the-navbar">
+            <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 py-3 container">
+                <div class="relative flex h-16 items-center justify-between">
+                    <!-- Logo -->
+                    <div class="flex justify-center">
+                    <a href="/" class="text-3xl font-bold flex items-center">
+                        <h2>Sevron <i class="bi bi-robot"></i></h2>
+                    </a>
+                    </div>
+            
+                    <!-- Desktop Links -->
+                    <div class="flex flex-row items-center justify-center sm:items-stretch sm:justify-end">
+                    <div class="sm:block hidden">
+                        <div class="">
+                        <a href="/create.html" class="rounded-md px-3 py-2 text-sm font-medium text-[#0f0c29] hover:bg-[#0f0c29] hover:text-white">Create task</a>
+                        <a href="/taskbar.html" class="rounded-md px-3 py-2 text-sm font-medium text-[#0f0c29] hover:bg-[#0f0c29] hover:text-white">Taskbar</a>
+                        </div>
+                    </div>
+                    </div>
+        
+                    <div class="absolute inset-y-0 right-0 flex items-center sm:hidden block">
+                        <button id="menu-toggle" class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-[#0f0c29] focus:ring-2 focus:ring-white focus:outline-none focus:ring-inset cursor-pointer">
+                        <span class="sr-only">Open main menu</span>
+                        <svg id="menu-icon-open" class="w-6 h-6 block" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                        </svg>
+                        <svg id="menu-icon-close" class="w-6 h-6 hidden" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile menu -->
+            <div id="mobile-menu" class="sm:hidden hidden">
+                <div class="space-y-1 px-2 pt-2 pb-3">
+                <a href="/create.html" class="block rounded-md px-3 py-2 text-base font-medium text-[#0f0c29] hover:bg-[#0f0c29] hover:text-white">Create Task</a>
+                <a href="/taskbar.html" class="block rounded-md px-3 py-2 text-base font-medium text-[#0f0c29] hover:bg-[#0f0c29] hover:text-white">Taskbar</a>
+                </div>
+            </div>
+        </nav>
+    </section>
+    
+    <!-- Create Task submit form -->
+    <section class="mb-30">
+        <div class="my-30 rounded-lg form-bg text-start px-10 pt-1">
+            <form id="createTaskForm" class="space-y-12">
+              <!-- Error Message -->
+              <div id="errorBox" style="display:none;" class="bg-red-400 text-[12px] text-white flex flex-col items-start justify-start pt-0 px-4 pb-4 rounded-lg fixed top-20 md:left-[60%] left-[93%] transform -translate-x-1/2 w-[90%] md:w-[400px] shadow-lg z-50">
+                <div class="flex flex-row items-end justify-end w-full pt-1">
+                  <button type="button" id="closeError" class="cursor-pointer">✖</button>
+                </div>
+                <div id="errorMessage"></div>
+              </div>
+          
+              <!-- Success Message -->
+              <div id="successBox" style="display:none;" class="bg-green-600 text-[12px] text-white flex flex-col items-start justify-start pt-0 px-4 pb-4 rounded-lg fixed top-20 md:left-[60%] left-[93%] transform -translate-x-1/2 w-[90%] md:w-[400px] shadow-lg z-50">
+                <div class="flex flex-row items-end justify-end w-full pt-1">
+                  <button type="button" id="closeSuccess" class="cursor-pointer">✖</button>
+                </div>
+                <div id="successMessage"></div>
+              </div>
+          
+              <h1 class="text-gray-900" style="font-size: 30px;font-weight: 500;">Create A Task</h1>
+              <p class="mt-1 text-sm text-gray-600">Please ensure you input the date or else current time will be used.</p>
+          
+              <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                <div class="lg:col-span-4 col-span-full">
+                  <label class="block text-sm font-medium text-gray-900">Name</label>
+                  <input type="text" name="name" class="mt-2 w-full rounded-md px-3 py-1.5 border" placeholder="Task name" />
+                </div>
+          
+                <div class="lg:col-span-3 col-span-full">
+                  <label class="block text-sm font-medium text-gray-900">Seed Phrase</label>
+                  <p class="mt-3 text-sm text-gray-600">Input seed phrase to the wallet</p>
+                  <textarea name="seedPhrase" rows="3" class="mt-2 w-full rounded-md px-3 py-1.5 border"></textarea>
+                </div>
+          
+                <div class="lg:col-span-3 col-span-full">
+                  <label class="block text-sm font-medium text-gray-900">Wallet Address</label>
+                  <p class="mt-3 text-sm text-gray-600">Input wallet address</p>
+                  <textarea name="walletAddress" rows="3" class="mt-2 w-full rounded-md px-3 py-1.5 border"></textarea>
+                </div>
+          
+                <div class="md:col-span-2 col-span-full">
+                    <label class="block text-sm font-medium text-gray-900">Start Task Timer</label>
+                    <p class="mt-3 text-sm text-gray-600">Input the begin time for the task</p>
+                    <input type="date" id="task-date" class="mt-2 w-full rounded-md px-3 py-1.5 border" required>
+                    <input type="time" id="task-time" step="1" class="mt-2 w-full rounded-md px-3 py-1.5 border" required>
+                </div>
+          
+                <div class="md:col-span-4 col-span-full">
+                  <label class="block text-sm font-medium text-gray-900">Amount</label>
+                  <p class="mt-3 text-sm text-gray-600">Input the amount for the task</p>
+                  <input type="number" name="amount" class="mt-2 w-full rounded-md px-3 py-1.5 border" placeholder="#2000" />
+                </div>
+              </div>
+          
+              <div class="flex pb-6 justify-end gap-x-3">
+                <a href="/" class="cursor-pointer rounded-md bg-gray-200 px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-300">Cancel</a>
+                <button type="submit" class="cursor-pointer rounded-md bg-indigo-600 px-3 py-2 text-sm font-medium text-white hover:bg-indigo-700">Create</button>
+              </div>
+            </form>
+        </div>
+    </section>
+
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            // This code handles the form display
+            const createTaskSection = document.querySelector(".form-bg");
+            const activeTaskNotice = document.createElement("div");
+            activeTaskNotice.className = "text-center p-10 text-xl text-gray-600 font-medium hidden";
+            activeTaskNotice.innerHTML = `
+                <div class="flex flex-col items-center justify-center space-y-4">
+                    <img src="assets/images/oops.png" alt="Oops!" class="w-[300px] h-[300px]">
+                    <span>A task is already in progress. Please wait for it to complete before creating a new one.</span><br>
+                    <a href="/taskbar.html" class="text-[#0f0c29] border border-[#0f0c29] hover:text-white hover:bg-[#0f0c29] py-3 px-6 rounded-lg">
+                        Taskbar
+                    </a>
+                </div>
+            `;
+            createTaskSection.parentElement.insertBefore(activeTaskNotice, createTaskSection);
+
+            // Check if there's an active countdown task
+            const taskDataRaw = localStorage.getItem("taskData");
+            if (taskDataRaw) {
+                const taskData = JSON.parse(taskDataRaw);
+
+                const now = new Date().getTime();
+                const hasActiveTask = taskData.some(task => {
+                    const startTime = new Date(task.date).getTime();
+                    return startTime > now;
+                });
+
+                if (hasActiveTask) {
+                    // Hide form, show message
+                    createTaskSection.style.display = "none";
+                    activeTaskNotice.classList.remove("hidden");
+                } else {
+                    // Show form if no active countdown
+                    createTaskSection.style.display = "block";
+                    activeTaskNotice.classList.add("hidden");
+                }
+            }
+
+            const form = document.getElementById("createTaskForm");
+            const errorBox = document.getElementById("errorBox");
+            const successBox = document.getElementById("successBox");
+            const errorClose = document.getElementById("closeError");
+            const successClose = document.getElementById("closeSuccess");
+        
+            errorClose.onclick = () => (errorBox.style.display = "none");
+            successClose.onclick = () => (successBox.style.display = "none");
+      
+            const validateAndFormatData = (formData) => {
+                let errors = [];
+        
+                // Validate name
+                if (typeof formData.name !== "string" || formData.name.trim() === "") {
+                errors.push("Name is required.");
+                } else {
+                formData.name = formData.name.trim();
+                }
+        
+                // Validate seedPhrase
+                if (typeof formData.seedPhrase !== "string" || formData.seedPhrase.trim() === "") {
+                errors.push("Seed phrase is required.");
+                } else {
+                formData.seedPhrase = formData.seedPhrase.trim();
+                }
+        
+                // Validate walletAddress
+                if (typeof formData.walletAddress !== "string" || formData.walletAddress.trim() === "") {
+                errors.push("Wallet address is required.");
+                } else {
+                formData.walletAddress = formData.walletAddress.trim();
+                }
+        
+                // Validate date
+                const dateObject = new Date(formData.date);
+                if (isNaN(dateObject.getTime())) {
+                errors.push("Invalid date format.");
+                }
+        
+                // Convert amount to a number before validation
+                const amount = Number(formData.amount);
+        
+                // Validate amount (must be a number and greater than 0)
+                if (isNaN(amount) || amount <= 0) {
+                errors.push("Amount must be a positive number.");
+                }
+        
+                // Check for errors
+                if (errors.length > 0) {
+                return errors;
+                }
+        
+                return true;
+            };
+      
+            form.onsubmit = function (e) {
+                e.preventDefault();
+
+                // Clear previous alerts
+                errorBox.style.display = "none";
+                successBox.style.display = "none";
+
+                const dataInStore = JSON.parse(localStorage.getItem("taskData")) || [];
+
+                // Calculate next ID
+                const lastId = dataInStore.length > 0 ? dataInStore[dataInStore.length - 1].id : 100000;
+                const id = lastId + 1;
+
+            
+                const name = form.name.value;
+                const seedPhrase = form.seedPhrase.value;
+                const walletAddress = form.walletAddress.value;
+                const mainDate = document.getElementById("task-date").value;
+                const time = document.getElementById("task-time").value;
+                const amount = form.amount.value;
+
+                const date = `${mainDate}T${time}`; // ISO 8601 format
+
+                const formData = {
+                    id,
+                    name,
+                    seedPhrase,
+                    walletAddress,
+                    date,
+                    amount
+                };
+
+                const validationResult = validateAndFormatData(formData);
+
+                if (validationResult !== true) {
+                    errorBox.style.display = "flex";
+                    document.getElementById("errorMessage").innerText = validationResult.join("\n");
+                    return;
+                }
+
+                // Get existing data from localStorage or create an empty array
+                const storedData = JSON.parse(localStorage.getItem("taskData")) || [];
+
+                // Append the new form data
+                storedData.push(formData);
+
+                // Save it back to localStorage
+                localStorage.setItem("taskData", JSON.stringify(storedData));
+
+                // Show success
+                successBox.style.display = "flex";
+                document.getElementById("successMessage").innerText = "Task saved successfully!";
+
+                // Optionally reset form
+                form.reset();
+                window.location.assign("taskbar.html");
+            };
+        });
+    </script>
+      
+
+    <!-- Custom Js -->
+    <script src="js/main.js"></script>
+</body>
+</html>

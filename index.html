@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sevron</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+
+    <!-- Manrope fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Russo+One&display=swap" rel="stylesheet">
+
+
+    <!-- Customize tailwind CSS -->
+    <link rel="stylesheet" href="css/global.css">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Framer motion -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <section class="mb-20">
+        <nav class="bg-white shadow-lg the-navbar">
+            <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 py-3 container">
+                <div class="relative flex h-16 items-center justify-between">
+                    <!-- Logo -->
+                    <div class="flex justify-center">
+                    <a href="/" class="text-3xl font-bold flex items-center">
+                        <h2>Sevron <i class="bi bi-robot"></i></h2>
+                    </a>
+                    </div>
+            
+                    <!-- Desktop Links -->
+                    <div class="flex flex-row items-center justify-center sm:items-stretch sm:justify-end">
+                    <div class="sm:block hidden">
+                        <div class="">
+                        <a href="/create.html" class="rounded-md px-3 py-2 text-sm font-medium text-[#0f0c29] hover:bg-[#0f0c29] hover:text-white">Create task</a>
+                        <a href="/taskbar.html" class="rounded-md px-3 py-2 text-sm font-medium text-[#0f0c29] hover:bg-[#0f0c29] hover:text-white">Taskbar</a>
+                        </div>
+                    </div>
+                    </div>
+        
+                    <div class="absolute inset-y-0 right-0 flex items-center sm:hidden block">
+                        <button id="menu-toggle" class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-[#0f0c29] hover:text-white focus:ring-2 focus:ring-white focus:outline-none focus:ring-inset cursor-pointer">
+                        <span class="sr-only">Open main menu</span>
+                        <svg id="menu-icon-open" class="w-6 h-6 block" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                        </svg>
+                        <svg id="menu-icon-close" class="w-6 h-6 hidden" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile menu -->
+            <div id="mobile-menu" class="sm:hidden hidden">
+                <div class="space-y-1 px-2 pt-2 pb-3">
+                <a href="/create.html" class="block rounded-md px-3 py-2 text-base font-medium text-[#0f0c29] hover:bg-[#0f0c29] hover:text-white">Create Task</a>
+                <a href="/taskbar.html" class="block rounded-md px-3 py-2 text-base font-medium text-[#0f0c29] hover:bg-[#0f0c29] hover:text-white">Taskbar</a>
+                </div>
+            </div>
+        </nav>
+    </section>
+    
+    <!-- Hero section -->
+    <section class="flex flex-col md:flex-row items-center justify-between w-full min-h-[80vh] px-6 md:px-16 container mx-auto relative the-hero">
+
+        <!-- Left Content -->
+        <div class="flex flex-col space-y-4 max-w-lg md:pt-0 mt-[100px] pt-[150px]">
+          <div class="text-4xl md:text-5xl font-bold">
+            <h1 class="md:text-[60px] text-[45px] font-bold">
+              <a href="/" class="inline-flex items-center">
+                Sevron <i class="bi bi-robot"></i>
+              </a>
+              <span class="ml-2"> Task Hub</span>
+            </h1>
+          </div>
+          <ul class="space-y-2 text-lg md:text-xl">
+            <li class="md:text-[50px] md:pb-4 text-[35px] font-semibold">1. Set Up The Task</li>
+            <li class="md:text-[40px] md:pb-4 text-[25px] font-medium">2. Create The Task</li>
+            <li class="md:text-[30px] md:pb-4 text-[15px]">3. Automate A Begin Timer</li>
+          </ul>
+    
+          <!-- Quotes -->
+          <div class="relative h-16">
+            <p id="quote-text" class="text-lg italic absolute quote-text">Loading...</p>
+          </div>
+    
+          <div class="flex py-2 flex-row gap-4">
+            <a href="/create.html" class="text-[#0f0c29] border border-[#0f0c29] hover:text-white hover:bg-[#0f0c29] py-3 px-6 rounded-lg">
+              Create A Task Now
+            </a>
+          </div>
+        </div>
+    
+        <!-- Right Image -->
+        <div class="relative w-full image-bg md:w-1/2 lg:block hidden">
+          <img src="/assets/images/man.png" alt="Motivational" class="shadow-lg rounded-lg z-0">
+        </div>
+    
+        <!-- Floating Images -->
+        <img src="/assets/images/analytics1.jpg" alt="Floating Image 1"
+          class="absolute top-20 xl:right-[600px] lg:right-[400px] w-26 h-24 z-2 lg:block hidden rounded-lg shadow-lg floating-img">
+    
+        <img src="/assets/images/analytics2.jpg" alt="Floating Image 2"
+          class="absolute bottom-10 right-[-10px] w-26 h-24 z-2 lg:block hidden rounded-lg shadow-lg floating-img">
+    
+        <img src="/assets/images/analytics3.jpg" alt="Floating Image 3"
+          class="absolute bottom-60 xl:right-[400px] lg:right-[200px] w-26 h-24 z-2 lg:block hidden rounded-lg shadow-lg floating-img">
+    </section>
+    
+      <!-- JavaScript -->
+    <script src="js/main.js"></script>
+</body>
+</html>
