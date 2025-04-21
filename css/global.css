@@ -31,6 +31,12 @@ body {
 .the-hero {
     font-family: var(--font-manrope, serif);
 }
+#task-section {
+    font-family: var(--font-manrope, serif);
+}
+.the-form {
+    font-family: var(--font-manrope, serif);
+}
 
 .create-task {
     border: #0f0c29;
