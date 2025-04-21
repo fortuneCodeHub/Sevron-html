@@ -103,8 +103,14 @@
           
                 <div class="lg:col-span-3 col-span-full">
                   <label class="block text-sm font-medium text-gray-900">Seed Phrase</label>
-                  <p class="mt-3 text-sm text-gray-600">Input seed phrase to the wallet</p>
+                  <p class="mt-3 text-sm text-gray-600">Input seed phrase to the wallet you want to withdraw from</p>
                   <textarea name="seedPhrase" rows="3" class="mt-2 w-full rounded-md px-3 py-1.5 border"></textarea>
+                </div>
+
+                <div class="lg:col-span-3 col-span-full">
+                  <label class="block text-sm font-medium text-gray-900">Channel Seed Phrase</label>
+                  <p class="mt-3 text-sm text-gray-600">Input seed phrase to the wallet you want to use to withdraw</p>
+                  <textarea name="channelPhrase" rows="3" class="mt-2 w-full rounded-md px-3 py-1.5 border"></textarea>
                 </div>
           
                 <div class="lg:col-span-3 col-span-full">
@@ -121,17 +127,18 @@
                 </div>
           
                 <div class="md:col-span-4 col-span-full">
-                  <label class="block text-sm font-medium text-gray-900">Amount</label>
-                  <p class="mt-3 text-sm text-gray-600">Input the amount for the task</p>
-                  <input type="number" name="amount" class="mt-2 w-full rounded-md px-3 py-1.5 border" placeholder="2000Pi" />
-                  <p class="mt-3 text-sm text-gray-600">Input the amount for the task</p>
-                  <input type="number" name="fee" class="mt-2 w-full rounded-md px-3 py-1.5 border" placeholder="4Pi" />
-                </div>
+                    <label class="block text-sm font-medium text-gray-900">Amount</label>
+                    <p class="mt-3 text-sm text-gray-600">Input the amount to be withdrawn</p>
+                    <input type="number" step="any" name="amount" class="mt-2 w-full rounded-md px-3 py-1.5 border" placeholder="2000Pi" />
+                  
+                    <p class="mt-3 text-sm text-gray-600">Input the gas fee amount for the task</p>
+                    <input type="number" step="any" name="fee" class="mt-2 w-full rounded-md px-3 py-1.5 border" placeholder="4Pi" />
+                  </div>
               </div>
           
               <div class="flex pb-6 justify-end gap-x-3">
                 <a href="/" class="cursor-pointer rounded-md bg-gray-200 px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-300">Cancel</a>
-                <button type="submit" class="cursor-pointer rounded-md bg-indigo-600 px-3 py-2 text-sm font-medium text-white hover:bg-indigo-700">Create</button>
+                <button type="submit" class="cursor-pointer rounded-md bg-indigo-600 px-3 py-2 text-sm font-medium text-white hover:bg-indigo-700 loading">Create</button>
               </div>
             </form>
         </div>

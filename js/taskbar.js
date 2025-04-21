@@ -58,53 +58,52 @@ function handleCancel(seedPhrase, id) {
         cancelButtonText: 'Cancel',
     }).then((result) => {
         if (result.isConfirmed) {
-            // (async () => {
-                // try {
-                //     const apiUrl = "http://5.196.190.224:5000/cancel";
+            (async () => {
+                try {
+                    const apiUrl = "http://5.196.190.224:5000/cancel";
 
-                //     const response = await fetch(apiUrl, {
-                //         method: "POST",
-                //         headers: {
-                //             "Content-Type": "application/json",
-                //         },
-                //         body: JSON.stringify(payload),
-                //     });
+                    const response = await fetch(apiUrl, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(payload),
+                    });
 
-                //     if (response.status === 200) {
-                    // Remove task from localStorage
-                    const storedData = JSON.parse(localStorage.getItem("taskData")) || [];
-                    const updatedData = storedData.filter(task => Number(task.id) !== Number(id));
+                    if (response.status === 200) {
+                        // Remove task from localStorage
+                        const storedData = JSON.parse(localStorage.getItem("taskData")) || [];
+                        const updatedData = storedData.filter(task => Number(task.id) !== Number(id));
 
-                    localStorage.setItem("taskData", JSON.stringify(updatedData));
+                        localStorage.setItem("taskData", JSON.stringify(updatedData));
 
-                    Swal.fire('Deleted!', 'The task has been removed from storage!', 'success')
-                        .then(() => location.reload());
-                    
-                    successBox.style.display = "flex";
-                    document.getElementById("successMessage").innerText = "You successfully ended this task!";
-                    console.log("Task cancelled:", phrase);
-            //         } else {
-            //             const res = await response.json();
-            //             errorBox.style.display = "flex";
-            //             document.getElementById("errorMessage").innerText = `Error: ${res.message || 'Something went wrong canceling the task.'}`;
-            //         }
-            //     } catch (err) {
-            //         errorBox.style.display = "flex";
-            //         document.getElementById("errorMessage").innerText = `Network error: ${err.message}`;
-            //     }
-            // })();
+                        Swal.fire('Deleted!', 'The task has been removed from storage!', 'success')
+                            .then(() => location.reload());
+                        
+                        successBox.style.display = "flex";
+                        document.getElementById("successMessage").innerText = "You successfully deleted and canceled this task!";
+
+
+                    } else if (response.status === 400) {
+
+                        errorBox.style.display = "flex";
+                        document.getElementById("errorMessage").innerText = `Error: There's no seed phrase for this task so it cannot be canceled`;
+                    } else {
+
+                        errorBox.style.display = "flex";
+                        document.getElementById("errorMessage").innerText = `Error: The seed phrase belonging to this task is not scheduled`;
+                    }
+                } catch (err) {
+                    errorBox.style.display = "flex";
+                    document.getElementById("errorMessage").innerText = `Network error:  Please connect to the internet before you can create a task`;
+                }
+            })();
         }
     });
 }
 
 function handleDelete(seedPhrase, id) {
     const phrase = decodeURIComponent(seedPhrase);
-
-    // console.log(id);
-    // console.log(phrase);
-    // console.log("Task deleted");
-    
-
     Swal.fire({
         title: 'Deleting this task...',
         html: `
@@ -137,7 +136,8 @@ function createCountdown(targetDate, container) {
         const { hours, minutes, seconds } = timeLeft;
 
         if (hours === 0 && minutes === 0 && seconds === 0) {
-            container.innerHTML = `<div class="bg-red-600 mx-1 p-2 rounded-lg text-[12px] text-white">Ended</div>`;
+            const formattedDate = targetDate.replace('T', ' ');
+            container.innerHTML = `<div class="bg-red-600 mx-1 p-2 rounded-lg text-[12px] text-white">Ended ${formattedDate}</div>`;
 
             // Switch the button text and click handler
             const button = container.closest('li').querySelector('.action-btn');

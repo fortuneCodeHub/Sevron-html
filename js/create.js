@@ -16,6 +16,18 @@ document.addEventListener("DOMContentLoaded", function () {
     `;
     createTaskSection.parentElement.insertBefore(activeTaskNotice, createTaskSection);
 
+    let loading = false;
+
+    function loadingFunction(boolean) {
+        const loader = document.querySelector(".loading")
+    
+        if (loading) {
+            loader.innerText = "Loading..."
+        } else {
+            loader.innerText = "Create"
+        }
+    }
+
     // // Check if there's an active countdown task
     const taskDataRaw = localStorage.getItem("taskData");
     if (taskDataRaw) {
@@ -64,6 +76,12 @@ document.addEventListener("DOMContentLoaded", function () {
         formData.seedPhrase = formData.seedPhrase.trim();
         }
 
+        if (typeof formData.channelPhrase !== "string" || formData.channelPhrase.trim() === "") {
+        errors.push("Channel phrase is required.");
+        } else {
+        formData.channelPhrase = formData.channelPhrase.trim();
+        }
+
         // Validate walletAddress
         if (typeof formData.walletAddress !== "string" || formData.walletAddress.trim() === "") {
         errors.push("Wallet address is required.");
@@ -103,6 +121,18 @@ document.addEventListener("DOMContentLoaded", function () {
     form.onsubmit = async function (e) {
         e.preventDefault();
 
+        loading = true
+        loadingFunction(loading)
+        
+
+        const loader = document.querySelector(".loading")
+
+        if (loading) {
+            loader.innerText = "Loading..."
+        } else {
+            loader.innerText = "Create"
+        }
+
         // Clear previous alerts
         errorBox.style.display = "none";
         successBox.style.display = "none";
@@ -115,6 +145,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const name = form.name.value;
         const seedPhrase = form.seedPhrase.value;
+        const channelPhrase = form.channelPhrase.value;
         const walletAddress = form.walletAddress.value;
         const mainDate = document.getElementById("task-date").value;
         const time = document.getElementById("task-time").value;
@@ -127,6 +158,7 @@ document.addEventListener("DOMContentLoaded", function () {
             id,
             name,
             seedPhrase,
+            channelPhrase,
             walletAddress,
             date,
             amount,
@@ -145,26 +177,27 @@ document.addEventListener("DOMContentLoaded", function () {
         const payload = {
             target_time: time,
             base_passphrase: seedPhrase,
+            channel_passphrase: channelPhrase,
             withdrawal_amount: amount,
             withdrawal_fee: fee,
             destination_address: walletAddress,
         };
 
-        console.log(`Payload: ${payload}`);
+        console.log([payload]);
 
-        // try {
-        //     // Replace this with your actual base URL
-        //     const apiUrl = "http://5.196.190.224:5000/schedule";
+        try {
+            // Replace this with your actual base URL
+            const apiUrl = "http://5.196.190.224:5000/schedule";
 
-        //     const response = await fetch(apiUrl, {
-        //         method: "POST",
-        //         headers: {
-        //             "Content-Type": "application/json",
-        //         },
-        //         body: JSON.stringify(payload),
-        //     });
+            const response = await fetch(apiUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(payload),
+            });
 
-        //     if (response.status === 200) {
+            if (response.status === 200) {
                 const storedData = JSON.parse(localStorage.getItem("taskData")) || [];
                 storedData.push(formData);
                 localStorage.setItem("taskData", JSON.stringify(storedData));
@@ -173,17 +206,30 @@ document.addEventListener("DOMContentLoaded", function () {
                 successBox.style.display = "flex";
                 document.getElementById("successMessage").innerText = "Task saved and scheduled successfully!";
 
+                loading = false
+                loadingFunction(loading)
                 form.reset();
                 window.location.assign("taskbar.html");
-        //     } else {
-        //         const res = await response.json();
-        //         errorBox.style.display = "flex";
-        //         document.getElementById("errorMessage").innerText = `Error: ${res.message || 'Something went wrong scheduling the task.'}`;
-        //     }
-        // } catch (err) {
-        //     errorBox.style.display = "flex";
-        //     document.getElementById("errorMessage").innerText = `Network error: ${err.message}`;
-        // }
+            } else if (response.status === 400) {
+                loading = false
+                loadingFunction(loading)
+                
+                errorBox.style.display = "flex";
+                document.getElementById("errorMessage").innerText = `Error: No claimable balance for account provided`;
+            } else {
+                loading = false
+                loadingFunction(loading)
+
+                errorBox.style.display = "flex";
+                document.getElementById("errorMessage").innerText = `Error: You can't schedule a task when one another task has been scheduled`;
+            }
+        } catch (err) {
+            loading = false
+            loadingFunction(loading)
+
+            errorBox.style.display = "flex";
+            document.getElementById("errorMessage").innerText = `Network error: Please connect to the internet before you can create a task`;
+        }
     };
 
 });
