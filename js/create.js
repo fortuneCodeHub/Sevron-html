@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // // Check if there's an active countdown task
+    // Check if there's an active countdown task
     const taskDataRaw = localStorage.getItem("taskData");
     if (taskDataRaw) {
         const taskData = JSON.parse(taskDataRaw);
@@ -167,6 +167,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const validationResult = validateAndFormatData(formData);
 
+        console.log(validationResult);
+        console.log(formData);
+        
+
         if (validationResult !== true) {
             errorBox.style.display = "flex";
             document.getElementById("errorMessage").innerText = validationResult.join("\n");
@@ -176,11 +180,11 @@ document.addEventListener("DOMContentLoaded", function () {
         // Prepare API payload
         const payload = {
             target_time: time,
-            base_passphrase: seedPhrase,
-            channel_passphrase: channelPhrase,
-            withdrawal_amount: amount,
-            withdrawal_fee: fee,
-            destination_address: walletAddress,
+            base_passphrase: formData.seedPhrase,
+            channel_passphrase: formData.channelPhrase,
+            withdrawal_amount: formData.amount,
+            withdrawal_fee: formData.fee,
+            destination_address: formData.walletAddress,
         };
 
         console.log([payload]);
@@ -208,8 +212,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 loading = false
                 loadingFunction(loading)
+
                 form.reset();
-                window.location.assign("taskbar.html");
+                setTimeout(() => {
+                    window.location.assign("taskbar.html");
+                }, 5000)
             } else if (response.status === 400) {
                 loading = false
                 loadingFunction(loading)
